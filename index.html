@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ALPHA | 方案一</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --primary: #00f2ff; }
+        body { background: #050505; color: white; overflow-x: hidden; }
+
+        /* 动态背景网格 */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image:
+                    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            z-index: -1;
+        }
+
+        /* 炫光球 */
+        .glow {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,242,255,0.15) 0%, transparent 70%);
+            top: -200px; right: -100px;
+            filter: blur(50px);
+            animation: float 10s infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100px, 50px); }
+        }
+
+        .neon-border {
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .neon-border:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0,242,255,0.2);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+<div class="grid-bg"></div>
+<div class="glow"></div>
+
+<nav class="p-8 flex justify-between items-center backdrop-blur-md sticky top-0 z-50">
+    <div class="text-xl font-black tracking-widest border-l-4 border-cyan-400 pl-3">CORE<span class="text-cyan-400">01</span></div>
+    <div class="hidden md:flex gap-10 text-xs uppercase tracking-widest text-gray-400">
+        <a href="#" class="hover:text-white">Product</a>
+        <a href="#" class="hover:text-white">Service</a>
+        <a href="#" class="hover:text-white">Contact</a>
+    </div>
+</nav>
+
+<main class="flex-grow flex items-center px-10 md:px-24">
+    <div class="max-w-4xl">
+        <h1 class="text-6xl md:text-8xl font-bold leading-none mb-6">
+            DEFINING <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">THE FUTURE</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-lg mb-10 leading-relaxed">
+            这是基于方案一构建的超级索引页。我们剔除了所有冗余，只留下纯净的数字感。每一个像素都为了极致的视觉交互而生。
+        </p>
+
+        <div class="flex gap-4">
+            <a href="/test-link" class="px-8 py-4 bg-cyan-500 text-black font-bold uppercase text-xs tracking-widest hover:bg-white transition-colors">
+                点击测试 404
+            </a>
+            <button class="px-8 py-4 border border-white/20 hover:border-cyan-400 transition-colors uppercase text-xs tracking-widest">
+                技术文档
+            </button>
+        </div>
+    </div>
+</main>
+
+<footer class="p-10 border-t border-white/5 text-gray-600 text-[10px] uppercase tracking-widest flex justify-between">
+    <div>© 2026 ALPHA DESIGN STUDIO</div>
+    <div>STAY HUNGRY / STAY FOOLISH</div>
+</footer>
+</body>
+</html>
