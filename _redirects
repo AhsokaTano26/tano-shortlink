@@ -1,6 +1,6 @@
-/github    /go.html?to=github    302
-/bili      /go.html?to=bili      302
-/blog      /go.html?to=blog      302
+/github    https://github.com/AhsokaTano26    301
+/bili      https://space.bilibili.com/435530511      301
+/blog      https://www.tano.asia      301
 
 # 兜底逻辑：如果没有匹配到，直接跳到 404
 /* /404.html             404
