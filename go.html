@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在建立安全连接...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        body { background: #050505; color: #fff; font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; margin: 0; }
+        #canvas-bg { position: absolute; top: 0; left: 0; z-index: 0; opacity: 0.6; }
+
+        .ui-container {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        /* 旋转刻度盘 */
+        .orbit-box {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ring {
+            position: absolute;
+            border: 1px solid rgba(0, 242, 255, 0.15);
+            border-radius: 50%;
+        }
+
+        .ring-1 { width: 100%; height: 100%; border-top: 2px solid #00f2ff; animation: spin 4s linear infinite; }
+        .ring-2 { width: 80%; height: 80%; border-bottom: 2px solid #ff00ff; animation: spin 3s linear reverse infinite; }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .glitch-text {
+            text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff;
+            letter-spacing: 0.5rem;
+        }
+
+        .log-area {
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2rem;
+            text-align: left;
+            min-width: 250px;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas-bg"></canvas>
+
+<div class="ui-container">
+    <div class="orbit-box mb-8">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="text-center">
+            <div id="percent" class="text-6xl font-black tracking-tighter">00%</div>
+            <div class="text-[10px] tracking-[0.4em] uppercase text-cyan-400 mt-2">Connecting</div>
+        </div>
+    </div>
+
+    <h2 class="glitch-text text-xl font-bold uppercase mb-4">跳转安全验证</h2>
+
+    <div class="log-area space-y-1">
+        <p id="l1">> 初始化重定向协议...</p>
+        <p id="l2" class="opacity-0">> 正在解析目标坐标...</p>
+        <p id="l3" class="opacity-0">> 握手成功，即将脱离当前维度。</p>
+    </div>
+</div>
+
+<script>
+    // --- 1. 配置映射表 (与你的 _redirects 保持一致) ---
+    const LINK_MAP = {
+        "github": "https://github.com/AhsokaTano26",
+        "bili": "https://space.bilibili.com/435530511",
+        "blog": "https://tano.asia"
+    };
+
+    // --- 2. 逻辑解析 ---
+    const params = new URLSearchParams(window.location.search);
+    const to = params.get('to');
+    const destination = LINK_MAP[to] || "404.html";
+
+    // 统计逻辑 (保存在浏览器本地)
+    if (to && LINK_MAP[to]) {
+        let stats = JSON.parse(localStorage.getItem('jump_stats') || '{}');
+        stats[to] = (stats[to] || 0) + 1;
+        localStorage.setItem('jump_stats', JSON.stringify(stats));
+    }
+
+    // --- 3. Three.js 背景动画 ---
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas-bg'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 1500;
+    const posArray = new Float32Array(starsCount * 3);
+    for(let i=0; i<starsCount*3; i++) posArray[i] = (Math.random() - 0.5) * 10;
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const starsMaterial = new THREE.PointsMaterial({ size: 0.005, color: 0x00f2ff });
+    const starMesh = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(starMesh);
+    camera.position.z = 2;
+
+    function animateBg() {
+        requestAnimationFrame(animateBg);
+        starMesh.rotation.y += 0.001;
+        starMesh.rotation.x += 0.0005;
+        renderer.render(scene, camera);
+    }
+    animateBg();
+
+    // --- 4. GSAP 交互动画与跳转 ---
+    const progress = { val: 0 };
+    const tl = gsap.timeline({
+        onComplete: () => {
+            setTimeout(() => { window.location.href = destination; }, 400);
+        }
+    });
+
+    tl.to(progress, {
+        val: 100,
+        duration: 2.5,
+        ease: "power3.inOut",
+        onUpdate: () => {
+            document.getElementById('percent').innerText = Math.floor(progress.val).toString().padStart(2, '0') + "%";
+        }
+    });
+
+    // 日志文本分段显示
+    tl.to("#l2", { opacity: 1, duration: 0.1 }, 0.8)
+        .to("#l3", { opacity: 1, duration: 0.1 }, 1.8);
+
+    // 目标信息更新
+    if (LINK_MAP[to]) {
+        document.getElementById('l2').innerText = `> 目标锁定: [${to.toUpperCase()}]`;
+    } else {
+        document.getElementById('l2').innerText = `> 警告: 未定义的协议地址`;
+        document.getElementById('l3').innerText = `> 正在引导至安全区域...`;
+    }
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
+</body>
+</html>
