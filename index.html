@@ -3,87 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE ALPHA | 方案一</title>
+    <title>TANO | 个人空间站</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        :root { --primary: #00f2ff; }
-        body { background: #050505; color: white; overflow-x: hidden; }
+        body { background: #050505; color: white; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .neon-text { text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); }
 
-        /* 动态背景网格 */
-        .grid-bg {
+        /* 背景动画 */
+        .bg-gradient {
             position: fixed;
-            inset: 0;
-            background-image:
-                    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 30%, #1e1e2e 0%, #000000 100%);
             z-index: -1;
-        }
-
-        /* 炫光球 */
-        .glow {
-            position: absolute;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(0,242,255,0.15) 0%, transparent 70%);
-            top: -200px; right: -100px;
-            filter: blur(50px);
-            animation: float 10s infinite alternate;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100px, 50px); }
-        }
-
-        .neon-border {
-            position: relative;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s;
-        }
-        .neon-border:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(0,242,255,0.2);
         }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
-<div class="grid-bg"></div>
-<div class="glow"></div>
+<body class="min-h-screen flex flex-col">
+<div class="bg-gradient"></div>
 
-<nav class="p-8 flex justify-between items-center backdrop-blur-md sticky top-0 z-50">
-    <div class="text-xl font-black tracking-widest border-l-4 border-cyan-400 pl-3">CORE<span class="text-cyan-400">01</span></div>
-    <div class="hidden md:flex gap-10 text-xs uppercase tracking-widest text-gray-400">
-        <a href="#" class="hover:text-white">Product</a>
-        <a href="#" class="hover:text-white">Service</a>
-        <a href="#" class="hover:text-white">Contact</a>
+<nav class="p-8 flex justify-between items-center relative z-20">
+    <div class="text-2xl font-black tracking-tighter neon-text">TANO<span class="text-cyan-400">.</span></div>
+    <div class="hidden md:flex space-x-12 text-xs uppercase tracking-[0.3em] text-gray-400">
+        <a href="/blog" class="hover:text-cyan-400 transition">Blog</a>
+        <a href="/github" class="hover:text-cyan-400 transition">Github</a>
+        <a href="/bili" class="hover:text-cyan-400 transition">Bilibili</a>
     </div>
 </nav>
 
-<main class="flex-grow flex items-center px-10 md:px-24">
-    <div class="max-w-4xl">
-        <h1 class="text-6xl md:text-8xl font-bold leading-none mb-6">
-            DEFINING <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">THE FUTURE</span>
+<main class="flex-grow flex flex-col items-center justify-center px-6 relative z-10">
+    <div class="text-center mb-16">
+        <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight">
+            欢迎来到<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">数字荒原</span>
         </h1>
-        <p class="text-gray-400 text-lg md:text-xl max-w-lg mb-10 leading-relaxed">
-            这是基于方案一构建的超级索引页。我们剔除了所有冗余，只留下纯净的数字感。每一个像素都为了极致的视觉交互而生。
-        </p>
+    </div>
 
-        <div class="flex gap-4">
-            <a href="/test-link" class="px-8 py-4 bg-cyan-500 text-black font-bold uppercase text-xs tracking-widest hover:bg-white transition-colors">
-                点击测试 404
-            </a>
-            <button class="px-8 py-4 border border-white/20 hover:border-cyan-400 transition-colors uppercase text-xs tracking-widest">
-                技术文档
-            </button>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
+        <a href="/blog" class="glass p-8 rounded-3xl hover:border-cyan-400 transition-all group">
+            <div class="text-cyan-400 mb-4 opacity-50 group-hover:opacity-100 transition">01 /</div>
+            <h3 class="text-xl font-bold mb-2">个人博客</h3>
+            <p class="text-xs text-gray-500">存放技术文档与生活随笔的避难所。</p>
+        </a>
+
+        <a href="/github" class="glass p-8 rounded-3xl hover:border-purple-500 transition-all group">
+            <div class="text-purple-500 mb-4 opacity-50 group-hover:opacity-100 transition">02 /</div>
+            <h3 class="text-xl font-bold mb-2">开源仓库</h3>
+            <p class="text-xs text-gray-500">源代码、工程文件以及未完成的实验。</p>
+        </a>
+
+        <a href="/bili" class="glass p-8 rounded-3xl hover:border-pink-500 transition-all group">
+            <div class="text-pink-500 mb-4 opacity-50 group-hover:opacity-100 transition">03 /</div>
+            <h3 class="text-xl font-bold mb-2">Bilibili</h3>
+            <p class="text-xs text-gray-500">记录数字生活的动态影像。反馈与交流。</p>
+        </a>
+    </div>
+
+    <div id="stats-board" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col items-center justify-center p-10">
+        <h2 class="text-3xl font-bold mb-8 text-cyan-400 tracking-widest">TRANSMISSION LOGS</h2>
+        <div id="stats-content" class="w-full max-w-md font-mono text-sm space-y-4">
         </div>
+        <button onclick="toggleStats()" class="mt-12 text-gray-500 border-b border-gray-500">关闭看板</button>
     </div>
 </main>
 
-<footer class="p-10 border-t border-white/5 text-gray-600 text-[10px] uppercase tracking-widest flex justify-between">
-    <div>© 2026 ALPHA DESIGN STUDIO</div>
-    <div>STAY HUNGRY / STAY FOOLISH</div>
+<footer class="p-10 text-[10px] text-gray-600 tracking-[0.5em] text-center uppercase">
+    Connection Established // 2026 Tano Asia
 </footer>
+
+<script>
+    // GSAP 进场动画
+    gsap.from("h1", { y: 50, opacity: 0, duration: 1, ease: "power4.out" });
+    gsap.from(".glass", {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        delay: 0.5,
+        ease: "back.out(1.7)"
+    });
+
+    // 统计看板逻辑
+    function toggleStats() {
+        const board = document.getElementById('stats-board');
+        const content = document.getElementById('stats-content');
+        board.classList.toggle('hidden');
+
+        if (!board.classList.contains('hidden')) {
+            const stats = JSON.parse(localStorage.getItem('jump_stats') || '{}');
+            content.innerHTML = Object.entries(stats).length > 0
+                ? Object.entries(stats).map(([key, val]) => `
+                        <div class="flex justify-between border-b border-white/10 pb-2">
+                            <span>ID: ${key.toUpperCase()}</span>
+                            <span class="text-cyan-400">${val} CLICKS</span>
+                        </div>
+                    `).join('')
+                : `<p class="text-center text-gray-500">暂无传输记录</p>`;
+        }
+    }
+
+    // 监听按键 'S' 开启统计看板 (Secret Key)
+    window.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 's') toggleStats();
+    });
+</script>
 </body>
 </html>
