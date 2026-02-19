@@ -1,0 +1,33 @@
+### JetBrains IDE ###
+.idea/
+
+# 排除特定的本地配置文件
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/dictionary.xml
+.idea/shelf/
+.idea/tasks.xml
+.idea/datasources.local.xml
+.idea/copilot/
+
+# 排除缓存和日志
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/vcs.xml
+.idea/codeStyles/
+.idea/inspectionProfiles/
+
+# 排除编译输出
+out/
+gen/
+
+# 排除特定的插件文件 (例如：JRebel, SonarLint)
+core
+.rebel.xml.bak
+.sonarlint/
+
+# 排除特定语言生成的项目文件 (如 Python, CMake)
+cmake-build-*/
+.venv/
+venv/
