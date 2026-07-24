@@ -1,0 +1,43 @@
+:root {
+  color-scheme: dark;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --line: rgba(255, 255, 255, 0.16);
+  --glass: rgba(145, 145, 145, 0.20);
+  --glass-strong: rgba(120, 120, 120, 0.30);
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.68);
+  --shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 231, 183, 0.22) 0, rgba(255, 231, 183, 0.07) 12%, transparent 30%),
+    radial-gradient(circle at 20% 36%, rgba(127, 217, 255, 0.18) 0, rgba(127, 217, 255, 0.05) 10%, transparent 22%),
+    radial-gradient(circle at 80% 18%, rgba(255, 138, 192, 0.14) 0, rgba(255, 138, 192, 0.04) 9%, transparent 20%),
+    linear-gradient(135deg, #1e222d 0%, #121520 44%, #0a0d15 100%);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+a {
+  font: inherit;
+}
